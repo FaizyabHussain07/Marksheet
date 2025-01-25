@@ -4,263 +4,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marksheet</title>
+    <title>Marksheet Management System</title>
+    <style>
+        /* Teacher section table */
+        #marksTable {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        #marksTable th,
+        #marksTable td {
+            padding: 5px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        #marksTable td {
+            width: 10%;
+        }
+
+        /* Change the layout to vertical input fields */
+        #marksTable tr td input {
+            width: 90%;
+            padding: 5px;
+            margin-top: 8px;
+        }
+
+        /* Adjust button layout */
+        button {
+            padding: 12px 30px;
+            margin: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #004494;
+        }
+
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3;
+            margin-top: 20px;
+        }
+
+        .section {
+            display: none;
+            width: 80%;
+            margin: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Form and Input Styles */
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        form .flex .roll input ,form .flex .name input {
+            width: 90%;
+            /* margin-left: 20px; */
+            padding: 8px;
+            margin-bottom:  5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        /* Result Box */
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e7f5ff;
+            border: 1px solid #0056b3;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        /* Input Field Arrangement for Teacher Portal */
+        .marksheet-table td {
+            padding: 10px;
+        }
+
+        .marksheet-table input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+
+            table,
+            th,
+            td {
+                font-size: 14px;
+            }
+
+            button {
+                padding: 10px 20px;
+            }
+
+            form input {
+                font-size: 14px;
+            }
+        }
+
+        /* Marksheets & Summary Styles */
+        .marksheet-container {
+            width: 90%;
+            margin: 20px auto;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .flex{
+            display: flex;
+            gap: 10px;
+            margin-right: 20px;
+        }
+    </style>
 </head>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #d9f0c0;
-        color: black;
-    }
-
-    .container {
-        width: 80%;
-        margin: 0 auto;
-        background-color: #e0ffc4;
-        padding: 20px;
-        border: 2px solid #a7d98d;
-        box-shadow: 0px 0px 10px #888888;
-        text-align: left;
-    }
-
-    h2 {
-        text-align: center;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    td,
-    th {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: center;
-    }
-
-    .marksheet {
-        margin-top: 20px;
-    }
-
-    .summary {
-        margin-top: 20px;
-        text-align: center;
-    }
-    .summary p {
-        margin-top: 20px;
-        text-align: center;
-        font-size: large;
-        font-style:oblique ;
-        font-weight: bold;
-    }
-
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #98bfb0;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        width: 80%;
-        margin: 0 auto;
-        background-color: #fFf;
-        padding: 20px;
-        border: 2px solid #000000;
-    }
-
-    .container1 {
-        width: 80%;
-        margin: 0 auto;
-        background-color: #aaf097;
-        padding: 20px;
-        border: 2px solid #000000;
-    }
-    
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #000;
-        padding-bottom: 20px;
-    }
-
-    .serial,
-    .code {
-        width: 20%;
-        text-align: center;
-        margin-bottom: 200px;
-    }
-
-    .title {
-        text-align: center;
-        width: 60%;
-    }
-
-    .title h1 {
-        font-size: 24px;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-top: 100px;
-    }
-
-    .logo {
-        width: 100px;
-        margin: 10px 0;
-    }
-
-    .title h2 {
-        margin: 5px 0;
-        font-size: 20px;
-        text-transform: uppercase;
-    }
-
-    .title h3 {
-        font-size: 18px;
-        margin-top: 10px;
-        text-transform: uppercase;
-    }
-
-    .details {
-        width: 100%;
-        margin-top: 30px;
-        border-collapse: collapse;
-    }
-
-    .details td {
-        border: 1px solid black;
-        padding: 10px;
-        text-align: left;
-    }
-
-    .details tr td:first-child {
-        width: 30%;
-    }
-</style>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="serial">
-                <p>SERIAL NO</p>
-                <p>xxxxxxx</p>
-            </div>
-            <div class="title">
-                <h1>Board Of Secondary Education Karachi</h1>
-                <img src="images OF BOARD LOGO.jpg" alt="Logo" class="logo" >
-                <h2>STATEMENT OF MARKS</h2>
-                <p>S.S.C. PART II (CLASS X-Y-Z) EXAMINATION</p>
-                <h3>SCIENCE GROUP</h3>
-            </div>
-            <div class="code">
-                <p>x-y-z</p>
-            </div>
-        </div>
+    <h1>Marksheet Management System</h1>
+    <div style="text-align: center; margin: 20px;">
+        <button onclick="showSection('teacherSection')">Teacher Portal</button>
+        <button onclick="showSection('studentSection')">Student Portal</button>
     </div>
-    <div class="container1">
-        <table class="details">
-            <tr>
-                <td>EXAMINATION</td>
-                <td>ANNUAL 2023</td>
-            </tr>
-            <tr>
-                <td>NAME</td>
-                <td>FAIZYAB HUSSAIN</td>
-            </tr>
-            <tr>
-                <td>FATHER'S NAME</td>
-                <td>MANZAR HUSSAIN</td>
-            </tr>
 
-            <tr>
-                <td>DATE OF BIRTH</td>
-                <td>12-12-2008</td>
-            </tr>
-            <tr>
-                <td>NAME OF SCHOOL</td>
-                <td>HAPPY PALACE GROUP OF SCHOOL ISPHANI CAMPUS</td>
-            </tr>
-            <tr>
-                <td>ROLL NO</td>
-                <td>0-0-0-0-0</td>
-            </tr>
+    <!-- Teacher Section -->
+    <div id="teacherSection" class="section">
+        <h2>Teacher Portal</h2>
+        <table id="marksTable">
+            <thead>
+                <tr>
+                    <th>Roll No</th>
+                    <th>Name</th>
+                    <th>Physics</th>
+                    <th>Math</th>
+                    <th>Computer</th>
+                    <th>Urdu</th>
+                    <th>English</th>
+                    <th>Islamiat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="rollNo" placeholder="Enter Roll No"></td>
+                    <td><input type="text" class="name" placeholder="Enter Name"></td>
+                    <td><input type="text" class="physics" placeholder="Marks"></td>
+                    <td><input type="text" class="math" placeholder="Marks"></td>
+                    <td><input type="text" class="computer" placeholder="Marks"></td>
+                    <td><input type="text" class="urdu" placeholder="Marks"></td>
+                    <td><input type="text" class="english" placeholder="Marks"></td>
+                    <td><input type="text" class="islamiat" placeholder="Marks"></td>
+                </tr>
+            </tbody>
         </table>
-
-        <table class="marksheet">
-            <tr>
-                <th>S.NO</th>
-                <th>SUBJECTS</th>
-                <th>MAXIMUM MARKS</th>
-                <th>MINIMUM MARKS</th>
-                <th>OBTAINED MARKS</th>
-                <th>REMARKS</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>URDU NORMAL</td>
-                <td>75</td>
-                <td>25</td>
-                <td>43</td>
-                <td>CELEARD</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>ENGLISH</td>
-                <td>100</td>
-                <td>33</td>
-                <td>56</td>
-                <td>CELEARD</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>ISLAMIAT</td>
-                <td>75</td>
-                <td>25</td>
-                <td>42</td>
-                <td>CELEARD</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>MATHEMATICS</td>
-                <td>75</td>
-                <td>25</td>
-                <td>55</td>
-                <td>CELEARD</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>CHEMISTRY</td>
-                <td>60</td>
-                <td>20</td>
-                <td>35</td>
-                <td>CELEARD</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>COMPUTER SCIENCE</td>
-                <td>60</td>
-                <td>20</td>
-                <td>47</td>
-                <td>CELEARD</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>PHYSICS</td>
-                <td>60</td>
-                <td>20</td>
-                <td>40</td>
-                <td>CELEARD</td>
-            </tr>
-        </table>
-        <div class="summary">
-            <p>Total: 318</p>
-            <p>No. of subjects cleared: SEVEN</p>
-            <p>Result: PASSED</p>
-        </div>
+        <button onclick="addRow()">Add student</button>
+        <button onclick="saveData()">Submit</button>
     </div>
+
+    <!-- Student Section -->
+    <div id="studentSection" class="section">
+        <h2>Student Portal</h2>
+        <form onsubmit="fetchResult(event)">
+            <div class="flex">
+                <div class="roll">
+                    <label for="rollNo">Roll Number:</label>
+                    <input type="text" id="rollNo" placeholder="Enter your Roll No" required>
+                </div>
+                <div class="name">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" placeholder="Enter your Name" required>
+                </div>
+            </div>
+
+            <button type="submit">View Marksheet</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function addRow() {
+            const table = document.getElementById('marksTable').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = ` 
+                <td><input type="text" class="rollNo" placeholder="Enter Roll No"></td>
+                <td><input type="text" class="name" placeholder="Enter Name"></td>
+                <td><input type="number" class="physics" placeholder="Marks"></td>
+                <td><input type="number" class="math" placeholder="Marks"></td>
+                <td><input type="number" class="computer" placeholder="Marks"></td>
+                <td><input type="number" class="urdu" placeholder="Marks"></td>
+                <td><input type="number" class="english" placeholder="Marks"></td>
+                <td><input type="number" class="islamiat" placeholder="Marks"></td>
+            `;
+            table.appendChild(newRow);
+        }
+
+        function saveData() {
+            const rows = document.querySelectorAll('#marksTable tbody tr');
+            const data = [];
+
+            rows.forEach(row => {
+                const rollNo = row.querySelector('.rollNo').value;
+                const name = row.querySelector('.name').value;
+                const physics = parseInt(row.querySelector('.physics').value) || 0;
+                const math = parseInt(row.querySelector('.math').value) || 0;
+                const computer = parseInt(row.querySelector('.computer').value) || 0;
+                const urdu = parseInt(row.querySelector('.urdu').value) || 0;
+                const english = parseInt(row.querySelector('.english').value) || 0;
+                const islamiat = parseInt(row.querySelector('.islamiat').value) || 0;
+                const total = physics + math + computer + urdu + english + islamiat;
+
+                if (rollNo && name) {
+                    data.push({ rollNo, name, physics, math, computer, urdu, english, islamiat, total });
+                }
+            });
+
+            if (data.length > 0) {
+                localStorage.setItem('marksData', JSON.stringify(data));
+                alert('Data saved successfully!');
+            } else {
+                alert('Please enter at least one student\'s data before saving.');
+            }
+        }
+
+        function fetchResult(event) {
+            event.preventDefault();
+            const rollNo = document.getElementById('rollNo').value;
+            const name = document.getElementById('name').value;
+
+            const data = JSON.parse(localStorage.getItem('marksData')) || [];
+            const student = data.find(s => s.rollNo === rollNo && s.name === name);
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            if (student) {
+                resultDiv.innerHTML = `
+                    <div class="marksheet-container">
+                        <div class="header">
+                            <div class="title">
+                               
+                                <h2>STATEMENT OF MARKS</h2>
+                                <p>H.S.C. PART I EXAMINATION</p>
+                                <h3>SCIENCE GROUP</h3>
+                            </div>
+                            
+                        </div>
+                        <div class="container1">
+                            <table class="details">
+                                <tr>
+                                    <td>EXAMINATION</td>
+                                    <td>ANNUAL 2025</td>
+                                </tr>
+                                <tr>
+                                    <td>NAME</td>
+                                    <td>${student.name}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>ROLL NO</td>
+                                    <td>${student.rollNo}</td>
+                                </tr>
+                            </table>
+
+                            <table class="marksheet">
+                                <tr>
+                                    <th>S.NO</th>
+                                    <th>SUBJECTS</th>
+                                    <th>MAXIMUM MARKS</th>
+                                    <th>MINIMUM MARKS</th>
+                                    <th>OBTAINED MARKS</th>
+                                    <th>REMARKS</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Physics</td>
+                                    <td>100</td>
+                                    <td>33</td>
+                                    <td>${student.physics}</td>
+                                    <td>${student.physics >= 33 ? 'PASS' : 'FAIL'}</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Math</td>
+                                    <td>100</td>
+                                    <td>33</td>
+                                    <td>${student.math}</td>
+                                    <td>${student.math >= 33 ? 'PASS' : 'FAIL'}</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Computer</td>
+                                    <td>100</td>
+                                    <td>33</td>
+                                    <td>${student.computer}</td>
+                                    <td>${student.computer >= 33 ? 'PASS' : 'FAIL'}</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Urdu</td>
+                                    <td>100</td>
+                                    <td>33</td>
+                                    <td>${student.urdu}</td>
+                                    <td>${student.urdu >= 33 ? 'PASS' : 'FAIL'}</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>English</td>
+                                    <td>100</td>
+                                    <td>33</td>
+                                    <td>${student.english}</td>
+                                    <td>${student.english >= 33 ? 'PASS' : 'FAIL'}</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Islamiat</td>
+                                    <td>100</td>
+                                    <td>33</td>
+                                    <td>${student.islamiat}</td>
+                                    <td>${student.islamiat >= 33 ? 'PASS' : 'FAIL'}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="summary">
+                            <p>Total: ${student.total} / 600</p>
+                            <p>Result: ${student.total >= 300 ? 'PASSED' : 'FAILED'}</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `<p>No student found with this roll number and name.</p>`;
+            }
+        }
+    </script>
 </body>
 
 </html>
